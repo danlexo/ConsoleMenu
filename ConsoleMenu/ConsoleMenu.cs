@@ -40,9 +40,10 @@ namespace ConsoleTools
       var currentForegroundColor = Console.ForegroundColor;
       var currentBackgroundColor = Console.BackgroundColor;
       bool breakIteration = false;
+      bool continuousRun = true;
       var filter = new StringBuilder();
 
-      while (true)
+      while (continuousRun)
       {
         do
         {
@@ -153,6 +154,10 @@ namespace ConsoleTools
         }
         else
         {
+          if (_config.RunOnce)
+          {
+            continuousRun = false;
+          }
           action?.Invoke();
         }
       }
@@ -230,6 +235,9 @@ namespace ConsoleTools
 
     /// <summary>default: true</summary>
     public bool EnableFilter = false;
+    
+    /// <summary>default: false</summary>
+    public bool RunOnce = false;
   }
 
   public struct MenuItem { public string Name; public int Index; };
